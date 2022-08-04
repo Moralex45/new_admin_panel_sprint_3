@@ -29,15 +29,16 @@ class PGLoader:
                             JsonFileStorage('state.txt')
                             ).get_state(state_key)
         self.batch = 100
-        self.data_container = []
 
     def get_state_key(self):
         """
             Получает состояние
         """
-        if self.state_key is None:
+        state =State(JsonFileStorage('state.txt')).get_state('key')
+
+        if state is None:
             return datetime.min
-        return self.state_key
+        return state
 
     def pg_loader(self) -> list:
         """
@@ -45,10 +46,5 @@ class PGLoader:
             load_query по batch записей
         """
         self.cursor.execute(load_query % self.get_state_key())
-        while True:
-            records = self.cursor.fetchmany(self.batch)
-            if not records:
-                break
-            for row in records:
-                self.data_container.append(row)
-        return self.data_container
+        while batch := self.cursor.fetchmany(self.batch):
+            yield from batch

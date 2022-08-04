@@ -13,11 +13,11 @@ dotenv.load_dotenv(
 
 
 class PostgreSettings(BaseSettings):
-    database: str = Field(..., env='DB_NAME')
-    user: str = Field(..., env='DB_USER')
-    password: str = Field(..., env='DB_PASSWORD')
-    host: str = Field(..., env='DB_HOST')
-    port: str = Field(..., env='DB_PORT')
+    database: str = Field('movies_database', env='DB_NAME')
+    user: str = Field('app', env='DB_USER')
+    password: str = Field('123qwe', env='DB_PASSWORD')
+    host: str = Field('127.0.0.1', env='DB_HOST')
+    port: str = Field(5434, env='DB_PORT')
 
     class Config:
         env_file = '../.env'

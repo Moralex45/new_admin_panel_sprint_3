@@ -1,7 +1,8 @@
 import abc
 import json
-import logging
 from typing import Any, Optional
+
+from logzero import logger
 
 
 class BaseStorage:
@@ -29,7 +30,7 @@ class JsonFileStorage(BaseStorage):
 
     def retrieve_state(self) -> dict:
         if self.file_path is None:
-            logging.info('Не установлен путь до файла.')
+            logger.error('The path to the file is not set.')
             return {}
 
         try:
